@@ -26,7 +26,7 @@ import java.util.List;
 @Tag(name = "Home Page Controller", description = "The controller manages home page")
 public class HomePageController {
 
-    private HomePageService homePageService;
+    private final HomePageService homePageService;
 
     @Autowired
     public HomePageController(HomePageService homePageService) {
@@ -74,7 +74,7 @@ public class HomePageController {
                             @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
                             @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
-        return null;
+        return ResponseEntity.ok().body(homePageService.getServerInfo(hubNumber));
     }
 
     @GetMapping("/mqttInfo/{hubNumber}")
