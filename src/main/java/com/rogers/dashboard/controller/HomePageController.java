@@ -1,5 +1,6 @@
 package com.rogers.dashboard.controller;
 
+import com.rogers.dashboard.exception.HttpRequestException;
 import com.rogers.dashboard.model.home_page.HardWareInfo;
 import com.rogers.dashboard.model.home_page.MQTTInfo;
 import com.rogers.dashboard.model.home_page.ServerInfo;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,7 +97,9 @@ public class HomePageController {
                             @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
                             @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
                             @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
-        return null;
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws HttpRequestException {
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Content-Type", "application/json")
+                .body(homePageService.getMQTTInfo(hubNumber));
     }
 }
