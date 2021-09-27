@@ -56,7 +56,7 @@ public class RogersTestServerController {
         try {
             return ResponseEntity.status(HttpStatus.OK)
                     .header("Content-Type", "application/json")
-                    .body(testExecuteService.executeTestV1(scenarioDTO));
+                    .body(testExecuteService.executeTestV1(hubNumber, scenarioDTO));
         } catch (TestServerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -84,7 +84,7 @@ public class RogersTestServerController {
         LOGGER.info("POST: /autotest/runTest \n{}", scenarioDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "application/json")
-                .body(testExecuteService.executeTestV2(scenarioDTO));
+                .body(testExecuteService.executeTestV2(hubNumber, scenarioDTO));
     }
 
 //    @Hidden
