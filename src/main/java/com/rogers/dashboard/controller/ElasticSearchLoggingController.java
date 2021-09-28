@@ -3,7 +3,6 @@ package com.rogers.dashboard.controller;
 
 import com.rogers.dashboard.exception.LoggingException;
 import com.rogers.dashboard.model.v2.TestNGResult;
-import com.rogers.dashboard.service.ElasticSearchServiceImpl;
 import com.rogers.dashboard.service.LoggingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,10 +26,13 @@ import java.util.List;
 @RequestMapping(path = "/autotest/logging")
 @Tag(name = "Logging controller", description = "controller for getting logs from servers")
 public class ElasticSearchLoggingController {
-    private final ElasticSearchServiceImpl elasticSearchService = ElasticSearchServiceImpl.getInstance();
+
+    private final LoggingService loggingService;
 
     @Autowired
-    private LoggingService loggingService;
+    public ElasticSearchLoggingController(LoggingService loggingService) {
+        this.loggingService = loggingService;
+    }
 
     @GetMapping("/testReport")
     @Operation(
@@ -53,7 +55,7 @@ public class ElasticSearchLoggingController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "application/json")
-                .body(elasticSearchService.getTestNGResult(var));
+                .body(loggingService.getTestNGResult(hubNumber, var));
     }
 
     @GetMapping("/lastDayLogs")
@@ -85,7 +87,7 @@ public class ElasticSearchLoggingController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body(loggingService.lastDayLogs(serverIndex));
+                .body(loggingService.lastDayLogs(hubNumber, serverIndex));
     }
 
     @GetMapping("/logsInTimeRange")
@@ -121,7 +123,7 @@ public class ElasticSearchLoggingController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body(loggingService.logsInTimeRange(serverIndex, timeFrom, timeTo));
+                .body(loggingService.logsInTimeRange(hubNumber, serverIndex, timeFrom, timeTo));
     }
 
     @GetMapping("/logsByTestNGResultUUID")
@@ -148,6 +150,22 @@ public class ElasticSearchLoggingController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body(loggingService.logsByUUID(uuid));
+                .body(loggingService.logsByUUID(hubNumber, uuid));
+    }
+
+    @GetMapping("/onlineLogs")
+    public ResponseEntity<String> getAllLogsWithDeleting(
+            @RequestParam("serverIndex") String serverIndex,
+            @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
+                    examples = {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Content-Type", "text/plain;charset=UTF-8")
+                .body(loggingService.getAllLogsWithDeleting(hubNumber, serverIndex));
     }
 }
