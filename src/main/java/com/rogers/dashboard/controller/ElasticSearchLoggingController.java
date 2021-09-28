@@ -152,4 +152,20 @@ public class ElasticSearchLoggingController {
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(loggingService.logsByUUID(hubNumber, uuid));
     }
+
+    @GetMapping("/onlineLogs")
+    public ResponseEntity<String> getAllLogsWithDeleting(
+            @RequestParam("serverIndex") String serverIndex,
+            @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
+                    examples = {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Content-Type", "text/plain;charset=UTF-8")
+                .body(loggingService.getAllLogsWithDeleting(hubNumber, serverIndex));
+    }
 }

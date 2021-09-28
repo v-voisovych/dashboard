@@ -22,6 +22,7 @@ public class LoggingService {
     private static final String LAST_DAY_LOGS_URL = "8091/autotest/logging/lastDayLogs";
     private static final String TIME_RANGE_LOGS_URL = "8091/autotest/logging/logsInTimeRange";
     private static final String TEST_RESULT_LOGS_URL = "8091/autotest/logging/logsByTestNGResultUUID";
+    private static final String ONLINE_LOGS_URL = "8091/autotest/logging/onlineLogs";
 
     private final HttpRequestSenderService httpRequestSenderService;
 
@@ -49,5 +50,10 @@ public class LoggingService {
         HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, TEST_NG_RESULT_URL, VAR, var);
         Type userListType = new TypeToken<List<TestNGResult>>(){}.getType();
         return new Gson().fromJson(response.body(), userListType);
+    }
+
+    public String getAllLogsWithDeleting(String hubNumber, String serverIndex) {
+        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, ONLINE_LOGS_URL, SERVER_INDEX, serverIndex);
+        return response.body();
     }
 }
