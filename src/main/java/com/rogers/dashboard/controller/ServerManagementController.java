@@ -1,5 +1,6 @@
 package com.rogers.dashboard.controller;
 
+import com.rogers.dashboard.service.ServerManagementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/autotest/serverManagement")
 @Tag(name = "Server Management Controller", description = "The controller manages the start, restart and stop of servers")
 public class ServerManagementController {
+
+    private final ServerManagementService serverManagementService;
+
+    @Autowired
+    public ServerManagementController(ServerManagementService serverManagementService) {
+        this.serverManagementService = serverManagementService;
+    }
 
     @GetMapping("/startServer")
     @Operation(
@@ -47,7 +56,7 @@ public class ServerManagementController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body("Server " + serverName + " was started");
+                .body(serverManagementService.startServer(hubNumber, serverName));
     }
 
     @GetMapping("/reStartServer")
@@ -80,7 +89,7 @@ public class ServerManagementController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body("Server " + serverName + " was restarted");
+                .body(serverManagementService.reStartServer(hubNumber, serverName));
     }
 
     @GetMapping("/stopServer")
@@ -96,7 +105,7 @@ public class ServerManagementController {
                     content = @Content(mediaType = "text/plain;charset=UTF-8",
                             schema = @Schema(implementation = String.class)))})
     public ResponseEntity<String> stopServer(
-            @PathVariable("serverName")
+            @RequestParam("serverName")
             @Parameter(description = "The shutdown server name",
                     examples = {
                             @ExampleObject(name = "test manager server name", value = "test-manager"),
@@ -113,6 +122,6 @@ public class ServerManagementController {
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
-                .body("Server " + serverName + " was stopped");
+                .body(serverManagementService.stopServer(hubNumber, serverName));
     }
 }
