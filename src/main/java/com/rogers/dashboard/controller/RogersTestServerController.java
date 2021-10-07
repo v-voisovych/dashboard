@@ -24,6 +24,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/autotest")
 @Tag(name = "Rogers test server controller", description = "controller for running test cases")
+@CrossOrigin
 public class RogersTestServerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RogersTestServerController.class);
 
@@ -46,12 +47,12 @@ public class RogersTestServerController {
             @Valid @RequestBody() @Parameter(description = "Schema for executing test") ScenarioDTO scenarioDTO,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are executing test case v1",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         LOGGER.info("POST: /autotest/runTest \n{}", scenarioDTO);
         try {
             return ResponseEntity.status(HttpStatus.OK)
@@ -75,12 +76,12 @@ public class RogersTestServerController {
             @Valid @RequestBody() @Parameter(description = "Schema for executing test") ScenarioDTO scenarioDTO,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are executing test case v2",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         LOGGER.info("POST: /autotest/runTest \n{}", scenarioDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "application/json")
