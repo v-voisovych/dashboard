@@ -15,15 +15,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/autotest/logging")
+@CrossOrigin
 @Tag(name = "Logging controller", description = "controller for getting logs from servers")
 public class ElasticSearchLoggingController {
 
@@ -47,12 +45,12 @@ public class ElasticSearchLoggingController {
             @RequestParam("var") @Parameter(description = "Parameter from Test NG Result, it can be uuid, jobId, jiraID") String var,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  Test NG Result",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "application/json")
                 .body(loggingService.getTestNGResult(hubNumber, var));
@@ -79,12 +77,12 @@ public class ElasticSearchLoggingController {
                             @ExampleObject(name = "ffmpeg index", value = "ffmpeg-log")}) String serverIndex,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(loggingService.lastDayLogs(hubNumber, serverIndex));
@@ -115,12 +113,12 @@ public class ElasticSearchLoggingController {
                     example = "2021-09-10T19:17:40.425445") String timeTo,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(loggingService.logsInTimeRange(hubNumber, serverIndex, timeFrom, timeTo));
@@ -142,12 +140,12 @@ public class ElasticSearchLoggingController {
             @RequestParam("uuid") @Parameter(description = "Parameter from Test NG Result uuid") String uuid,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(loggingService.logsByUUID(hubNumber, uuid));
@@ -155,15 +153,20 @@ public class ElasticSearchLoggingController {
 
     @GetMapping("/onlineLogs")
     public ResponseEntity<String> getAllLogsWithDeleting(
-            @RequestParam("serverIndex") String serverIndex,
+            @RequestParam("serverIndex") @Parameter(description = "Name index of elasticsearch",
+                    examples = {
+                            @ExampleObject(name = "test manager index", value = "test-manager-log-tmp"),
+                            @ExampleObject(name = "selenium index", value = "selenium-log-tmp"),
+                            @ExampleObject(name = "appium index", value = "appium-log-tmp"),
+                            @ExampleObject(name = "ffmpeg index", value = "ffmpeg-log-tmp")})String serverIndex,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are searching  logs",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) throws LoggingException {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) throws LoggingException {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(loggingService.getAllLogsWithDeleting(hubNumber, serverIndex));

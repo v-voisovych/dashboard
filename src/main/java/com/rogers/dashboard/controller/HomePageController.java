@@ -15,16 +15,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/autotest/homePage")
 @Tag(name = "Home Page Controller", description = "The controller manages home page")
+@CrossOrigin
 public class HomePageController {
 
     private final HomePageService homePageService;
@@ -47,12 +45,12 @@ public class HomePageController {
             @PathVariable("hubNumber")
             @Parameter(description = "Number of hub where will get hardware info",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return null;
     }
 
@@ -69,12 +67,12 @@ public class HomePageController {
             @PathVariable("hubNumber")
             @Parameter(description = "Number of hub where will get server info",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.ok().body(homePageService.getServerInfo(hubNumber));
     }
 
@@ -91,12 +89,12 @@ public class HomePageController {
             @PathVariable("hubNumber")
             @Parameter(description = "Number of hub where will get MQTT info",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "application/json")
                 .body(homePageService.getMQTTInfo(hubNumber));

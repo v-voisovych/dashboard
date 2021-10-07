@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/autotest/serverManagement")
 @Tag(name = "Server Management Controller", description = "The controller manages the start, restart and stop of servers")
+@CrossOrigin
 public class ServerManagementController {
 
     private final ServerManagementService serverManagementService;
@@ -48,12 +49,12 @@ public class ServerManagementController {
                             @ExampleObject(name = "ffmpeg server name", value = "ffmpeg")}) String serverName,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where server will be started",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(serverManagementService.startServer(hubNumber, serverName));
@@ -81,12 +82,12 @@ public class ServerManagementController {
                             @ExampleObject(name = "ffmpeg server name", value = "ffmpeg")}) String serverName,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we where server will be restarted",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(serverManagementService.reStartServer(hubNumber, serverName));
@@ -114,12 +115,12 @@ public class ServerManagementController {
                             @ExampleObject(name = "ffmpeg server name", value = "ffmpeg")}) String serverName,
             @RequestParam("hubNumber") @Parameter(description = "Number of hub where we where server will be stopped",
                     examples = {
-                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub-1"),
-                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub-2"),
-                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub-3"),
-                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub-4"),
-                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub-5"),
-                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub-6")}) String hubNumber) {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .body(serverManagementService.stopServer(hubNumber, serverName));
