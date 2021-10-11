@@ -45,7 +45,7 @@ public class HomePageService {
     public List<HardWareInfo> getHardWareInfo(String hubName) {
         HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubName, qaMonitorPort + HARD_WAR_INFO_URL);
         Gson gson = new Gson();
-        Type userListType = new TypeToken<ArrayList<ServerInfo>>(){}.getType();
+        Type userListType = new TypeToken<ArrayList<HardWareInfo>>(){}.getType();
         return gson.fromJson(response.body(), userListType);
     }
 

@@ -1,12 +1,11 @@
 package com.rogers.dashboard.model.home_page;
 
-import com.rogers.dashboard.model.enums.HardWareStatus;
-
 public class HardWareInfo {
 
     private String name;
-    private String model;
-    private HardWareStatus hardWareStatus;
+    private String os;
+    private String hardWareStatus;
+    private Details details;
 
     public String getName() {
         return name;
@@ -16,19 +15,27 @@ public class HardWareInfo {
         this.name = name;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public HardWareStatus getHardWareStatus() {
+    public String getHardWareStatus() {
         return hardWareStatus;
     }
 
-    public void setHardWareStatus(HardWareStatus hardWareStatus) {
+    public void setHardWareStatus(String hardWareStatus) {
         this.hardWareStatus = hardWareStatus;
+    }
+
+    public Details getDetails() {
+        return details;
+    }
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
     }
 }

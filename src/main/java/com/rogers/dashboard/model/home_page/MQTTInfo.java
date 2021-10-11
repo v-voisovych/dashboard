@@ -6,6 +6,7 @@ public class MQTTInfo {
     private AppiumTopics appiumTopics;
     private FfmpegTopics ffmpegTopics;
     private TestManagerTopics testManagerTopics;
+    private SeleniumTopics seleniumTopics;
 
     public String getMqttServer() {
         return mqttServer;
@@ -45,5 +46,13 @@ public class MQTTInfo {
 
     public void setTestManagerTopics(TestManagerTopics testManagerTopics) {
         this.testManagerTopics = testManagerTopics;
+    }
+
+    public SeleniumTopics getSeleniumTopics() {
+        return seleniumTopics;
+    }
+
+    public void setSeleniumTopics(SeleniumTopics seleniumTopics) {
+        this.seleniumTopics = seleniumTopics;
     }
 }
