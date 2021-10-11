@@ -51,7 +51,7 @@ public class HomePageController {
                             @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
                             @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
                             @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
-        return null;
+        return ResponseEntity.ok().body(homePageService.getHardWareInfo(hubNumber));
     }
 
     @GetMapping("/serversInfo/{hubNumber}")
