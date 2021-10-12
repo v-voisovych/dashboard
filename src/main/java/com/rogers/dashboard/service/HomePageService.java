@@ -40,7 +40,7 @@ public class HomePageService {
             return new Gson().fromJson(response.body(), userListType);
         } catch (NullPointerException e) {
             MQTTInfo mqttInfo = new MQTTInfo();
-            mqttInfo.setErrorMessage("Response is empty, something is wrong with the network");
+            mqttInfo.setErrorMessage("Response is empty or QA Monitor isn't started");
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             return mqttInfo;
         }
@@ -66,7 +66,7 @@ public class HomePageService {
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             HardWareInfo hardWareInfo = new HardWareInfo();
-            hardWareInfo.setErrorMessage("Response is empty, something is wrong with the network");
+            hardWareInfo.setErrorMessage("Response is empty or QA Monitor isn't started");
             list.add(hardWareInfo);
         }
         return list;

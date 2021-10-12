@@ -7,6 +7,15 @@ public class Details {
     private String platformVersion;
     private String deviceManufacturer;
     private String deviceModel;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public String getPlatform() {
         return platform;

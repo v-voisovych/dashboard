@@ -35,7 +35,7 @@ public class SystemUsageService {
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             SystemUsage systemUsage = new SystemUsage();
-            systemUsage.setErrorMessage("Response is empty, something is wrong with the network");
+            systemUsage.setErrorMessage("Response is empty or QA Monitor isn't started");
             return systemUsage;
         }
         Type userListType = new TypeToken<SystemUsage>() {

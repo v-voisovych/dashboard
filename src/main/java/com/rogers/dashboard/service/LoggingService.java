@@ -47,7 +47,7 @@ public class LoggingService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 
@@ -57,7 +57,7 @@ public class LoggingService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 
@@ -67,7 +67,7 @@ public class LoggingService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 
@@ -85,7 +85,7 @@ public class LoggingService {
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             TestNGResult testNGResult = new TestNGResult();
-            testNGResult.setErrorMessage("Response is empty, something is wrong with the network");
+            testNGResult.setErrorMessage("Response is empty or QA Monitor isn't started");
             list.add(testNGResult);
         }
         return list;
@@ -97,7 +97,7 @@ public class LoggingService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 }

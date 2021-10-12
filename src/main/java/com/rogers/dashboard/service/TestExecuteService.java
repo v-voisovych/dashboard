@@ -42,7 +42,7 @@ public class TestExecuteService {
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             TestResult testResult = new TestResult();
-            testResult.setErrorMessage("Response is empty, something is wrong with the network");
+            testResult.setErrorMessage("Response is empty or QA Monitor isn't started");
             return testResult;
         }
     }
@@ -56,7 +56,7 @@ public class TestExecuteService {
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             TestNGResult testNGResult = new TestNGResult();
-            testNGResult.setErrorMessage("Response is empty, something is wrong with the network");
+            testNGResult.setErrorMessage("Response is empty or QA Monitor isn't started");
             return testNGResult;
         }
     }
