@@ -16,6 +16,19 @@ public class TestManagerTopics {
     private String seleniumCommand;
     private String seleniumCommandV2;
     private String seleniumResult;
+    private String seleniumLogsCommand;
+    private String appiumLogsCommand;
+    private String ffmpegLogsCommand;
+    private String logsResult;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public String getIosCommand() {
         return iosCommand;
@@ -135,5 +148,37 @@ public class TestManagerTopics {
 
     public void setSeleniumResult(String seleniumResult) {
         this.seleniumResult = seleniumResult;
+    }
+
+    public String getSeleniumLogsCommand() {
+        return seleniumLogsCommand;
+    }
+
+    public void setSeleniumLogsCommand(String seleniumLogsCommand) {
+        this.seleniumLogsCommand = seleniumLogsCommand;
+    }
+
+    public String getAppiumLogsCommand() {
+        return appiumLogsCommand;
+    }
+
+    public void setAppiumLogsCommand(String appiumLogsCommand) {
+        this.appiumLogsCommand = appiumLogsCommand;
+    }
+
+    public String getFfmpegLogsCommand() {
+        return ffmpegLogsCommand;
+    }
+
+    public void setFfmpegLogsCommand(String ffmpegLogsCommand) {
+        this.ffmpegLogsCommand = ffmpegLogsCommand;
+    }
+
+    public String getLogsResult() {
+        return logsResult;
+    }
+
+    public void setLogsResult(String logsResult) {
+        this.logsResult = logsResult;
     }
 }

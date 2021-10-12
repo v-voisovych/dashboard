@@ -2,18 +2,24 @@ package com.rogers.dashboard.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.rogers.dashboard.model.home_page.HardWareInfo;
 import com.rogers.dashboard.model.v2.TestNGResult;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class LoggingService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomePageService.class);
     private final static String VAR = "var";
     private final static String UUID = "uuid";
     private final static String SERVER_INDEX = "serverIndex";
@@ -36,28 +42,62 @@ public class LoggingService {
     }
 
     public String logsByUUID(String hubNumber, String uuid) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TEST_RESULT_LOGS_URL, UUID, uuid);
-        return response.body();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TEST_RESULT_LOGS_URL, UUID, uuid);
+            return response.body();
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            return "Response is empty, something is wrong with the network";
+        }
     }
 
     public String lastDayLogs(String hubNumber, String serverIndex) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + LAST_DAY_LOGS_URL, SERVER_INDEX, serverIndex);
-        return response.body();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + LAST_DAY_LOGS_URL, SERVER_INDEX, serverIndex);
+            return response.body();
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            return "Response is empty, something is wrong with the network";
+        }
     }
 
     public String logsInTimeRange(String hubNumber, String serverIndex, String timeFrom, String timeTo) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TIME_RANGE_LOGS_URL, SERVER_INDEX, serverIndex, TIME_FROM, timeFrom, TIME_TO, timeTo);
-        return response.body();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TIME_RANGE_LOGS_URL, SERVER_INDEX, serverIndex, TIME_FROM, timeFrom, TIME_TO, timeTo);
+            return response.body();
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            return "Response is empty, something is wrong with the network";
+        }
     }
 
     public List<TestNGResult> getTestNGResult(String hubNumber, String var) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TEST_NG_RESULT_URL, VAR, var);
-        Type userListType = new TypeToken<List<TestNGResult>>(){}.getType();
-        return new Gson().fromJson(response.body(), userListType);
+        Gson gson = new Gson();
+        List<TestNGResult> list = new ArrayList<>();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + TEST_NG_RESULT_URL, VAR, var);
+            Type userListType = new TypeToken<List<TestNGResult>>() {
+            }.getType();
+            String responseBody = response.body();
+            if (responseBody.startsWith("[")) {
+                list = gson.fromJson(responseBody, userListType);
+            }
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            TestNGResult testNGResult = new TestNGResult();
+            testNGResult.setErrorMessage("Response is empty, something is wrong with the network");
+            list.add(testNGResult);
+        }
+        return list;
     }
 
     public String getAllLogsWithDeleting(String hubNumber, String serverIndex) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + ONLINE_LOGS_URL, SERVER_INDEX, serverIndex);
-        return response.body();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubNumber, qaMonitorPort + ONLINE_LOGS_URL, SERVER_INDEX, serverIndex);
+            return response.body();
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            return "Response is empty, something is wrong with the network";
+        }
     }
 }

@@ -5,6 +5,9 @@ public class SeleniumTopics {
     private String seleniumCommand;
     private String seleniumCommandV2;
     private String seleniumResult;
+    private String seleniumLogsCommand;
+    private String seleniumLogsResult;
+    private String errorMessage;
 
     public String getSeleniumCommand() {
         return seleniumCommand;
@@ -28,5 +31,29 @@ public class SeleniumTopics {
 
     public void setSeleniumResult(String seleniumResult) {
         this.seleniumResult = seleniumResult;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getSeleniumLogsCommand() {
+        return seleniumLogsCommand;
+    }
+
+    public void setSeleniumLogsCommand(String seleniumLogsCommand) {
+        this.seleniumLogsCommand = seleniumLogsCommand;
+    }
+
+    public String getSeleniumLogsResult() {
+        return seleniumLogsResult;
+    }
+
+    public void setSeleniumLogsResult(String seleniumLogsResult) {
+        this.seleniumLogsResult = seleniumLogsResult;
     }
 }

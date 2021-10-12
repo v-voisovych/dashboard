@@ -7,6 +7,15 @@ public class MQTTInfo {
     private FfmpegTopics ffmpegTopics;
     private TestManagerTopics testManagerTopics;
     private SeleniumTopics seleniumTopics;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public String getMqttServer() {
         return mqttServer;
@@ -55,4 +64,5 @@ public class MQTTInfo {
     public void setSeleniumTopics(SeleniumTopics seleniumTopics) {
         this.seleniumTopics = seleniumTopics;
     }
+
 }
