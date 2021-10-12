@@ -5,6 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import com.rogers.dashboard.model.home_page.HardWareInfo;
 import com.rogers.dashboard.model.home_page.MQTTInfo;
 import com.rogers.dashboard.model.home_page.ServerInfo;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.List;
 @Service
 public class HomePageService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomePageService.class);
     private static final String MQTT_INFO_URL = "/autotest/homePage/getMQTTInfo";
     private static final String SERVER_INFO_URL = "/autotest/homePage/getServerInfo";
     private static final String HARD_WAR_INFO_URL = "/autotest/homePage/getHardWareInfo";
@@ -30,9 +34,16 @@ public class HomePageService {
     }
 
     public MQTTInfo getMQTTInfo(String hubName) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubName, qaMonitorPort + MQTT_INFO_URL);
-        Type userListType = new TypeToken<MQTTInfo>(){}.getType();
-        return new Gson().fromJson(response.body(), userListType);
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubName, qaMonitorPort + MQTT_INFO_URL);
+            Type userListType = new TypeToken<MQTTInfo>(){}.getType();
+            return new Gson().fromJson(response.body(), userListType);
+        } catch (NullPointerException e) {
+            MQTTInfo mqttInfo = new MQTTInfo();
+            mqttInfo.setErrorMessage("Response is empty, something is wrong with the network");
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            return mqttInfo;
+        }
     }
 
 	public List<ServerInfo> getServerInfo(String hubName) {
@@ -43,10 +54,21 @@ public class HomePageService {
 	}
 
     public List<HardWareInfo> getHardWareInfo(String hubName) {
-        HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubName, qaMonitorPort + HARD_WAR_INFO_URL);
         Gson gson = new Gson();
-        Type userListType = new TypeToken<ArrayList<HardWareInfo>>(){}.getType();
-        return gson.fromJson(response.body(), userListType);
+        List<HardWareInfo> list = new ArrayList<>();
+        try {
+            HttpResponse<String> response = httpRequestSenderService.sendGetRequest(hubName, qaMonitorPort + HARD_WAR_INFO_URL);
+            Type userListType = new TypeToken<ArrayList<HardWareInfo>>(){}.getType();
+            String responseBody = response.body();
+            if (responseBody.startsWith("[")) {
+                list = gson.fromJson(responseBody, userListType);
+            }
+        } catch (NullPointerException e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            HardWareInfo hardWareInfo = new HardWareInfo();
+            hardWareInfo.setErrorMessage("Response is empty, something is wrong with the network");
+            list.add(hardWareInfo);
+        }
+        return list;
     }
-
 }

@@ -21,6 +21,7 @@ public class TestNGResult {
     private String finishedOn;
     private String videoRecord;
     private String focusVideoRecord;
+    private String errorMessage;
 
     public TestNGResult(String uuid, String jobId, String jiraId, Status status) {
         this.uuid = uuid;
@@ -31,6 +32,14 @@ public class TestNGResult {
     }
 
     public TestNGResult() {
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public String getUuid() {

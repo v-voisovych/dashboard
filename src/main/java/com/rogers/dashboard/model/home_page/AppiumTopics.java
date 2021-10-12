@@ -9,6 +9,7 @@ public class AppiumTopics {
     private String androidResult;
     private String androidCommandV2;
     private String androidResultV2;
+    private String errorMessage;
 
     public String getAndroidCommand() {
         return androidCommand;
@@ -72,5 +73,13 @@ public class AppiumTopics {
 
     public void setAndroidResultV2(String androidResultV2) {
         this.androidResultV2 = androidResultV2;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
