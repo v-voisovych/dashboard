@@ -34,7 +34,7 @@ public class ServerManagementService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 
@@ -44,7 +44,7 @@ public class ServerManagementService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 
@@ -54,7 +54,7 @@ public class ServerManagementService {
             return response.body();
         } catch (NullPointerException e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
-            return "Response is empty, something is wrong with the network";
+            return "Response is empty or QA Monitor isn't started";
         }
     }
 }
