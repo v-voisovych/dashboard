@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/autotest")
@@ -88,67 +89,51 @@ public class RogersTestServerController {
                 .body(testExecuteService.executeTestV2(hubNumber, scenarioDTO));
     }
 
-//    @Hidden
-//    @Deprecated
-//    @PostMapping(path = "/validate")
-//    public ResponseEntity runTestForDeviceProperty(@Valid @RequestBody() com.rogers.xhome.autotest.testmanager.v1.model.ScenarioDTO scenarioDTO) {
-//        LOGGER.info("POST: /autotest/validate \n{}", scenarioDTO);
-//        try {
-//            return ResponseEntity.status(HttpStatus.OK).body(autoTestService.testDevice(scenarioDTO));
-//        } catch (TestServerException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
-//
-//    @Hidden
-//    @Deprecated
-//    @PostMapping(path = "/runTestQueue")
-//    public ResponseEntity runTestQueueForDeviceProperty(@Valid @RequestBody() TestQueue testQueue) {
-//        try {
-//            return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "application/json").body(autoTestService.submitTestQueue(testQueue));
-//        } catch (TestServerException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
-//
-//    @Hidden
-//    @Deprecated
-//    @PostMapping(path = "/getTestQueueResult")
-//    public ResponseEntity getTestQueueResult(@Valid @RequestBody() TestQueue testQueue) {
-//        return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "application/json").body(autoTestService.getTestQueueResult(testQueue));
-//    }
-//
-//    @Hidden
-//    @PostMapping(path = "/endSession")
-//    public ResponseEntity endSession() {
-//        PreTestValidationResultContext.getInstance().setPreTestValidation(new HashMap<>());
-//        return ResponseEntity.status(HttpStatus.OK).body(autoTestService.endSession());
-//    }
-//
-//    @Hidden
-//    @GetMapping(path = "/result/{callId}")
-//    public ResponseEntity checkResults(@PathVariable("callId") String callId) {
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .header("Content-Type", "application/json")
-//                .body(autoTestService.getTestResultAsJson(callId));
-//    }
-//
-//    @Hidden
-//    @GetMapping(path = "/health")
-//    public ResponseEntity health() {
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .header("Content-Type", "application/json")
-//                .body(healthService.getTestServerHealth());
-//    }
+    @Operation(
+            summary = "Method execute test case queue version 2",
+            description = "Method execute test case queue version 2 by array of test cases names"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Test case queue v2 finished returns list of Test NG results",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = List.class))})})
+    @PostMapping(path = "/runTestQueue")
+    public ResponseEntity runTestQueueForQaMonitor(
+            @Valid @RequestBody() @Parameter(description = "List of names executing tests [STCX_5643, STCX_6543,...]",
+                    examples = {
+                            @ExampleObject(name = "List of names executing tests", value = "[STCX_5643, STCX_6543,...]")}) List<String> queueList,
+            @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are executing test case v2",
+            examples = {
+                    @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                    @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                    @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                    @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                    @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                    @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
+        return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "application/json").body(testExecuteService.executeQueueV1(hubNumber, queueList));
+    }
 
-
-//    @Autowired
-//    public void setAutoTestService(AutoTestService autoTestService) {
-//        this.autoTestService = autoTestService;
-//    }
-//
-//    @Autowired
-//    public void setHealthService(HealthService healthService) {
-//        this.healthService = healthService;
-//    }
+    @Operation(
+            summary = "Method execute test case queue version 2",
+            description = "Method execute test case queue version 2 by array of test cases names"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Test case queue v2 finished returns list of Test NG results",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = List.class))})})
+    @PostMapping(path = "/v2/runTestQueue")
+    public ResponseEntity runTestQueueForQaMonitorV2(
+            @Valid @RequestBody() @Parameter(description = "List of names executing tests",
+                    examples = {
+                            @ExampleObject(name = "List of names executing tests", value = "[STCX_5643, STCX_6543,...]")}) List<String> queueList,
+            @RequestParam("hubNumber") @Parameter(description = "Number of hub where we are executing test case v2",
+                    examples = {
+                            @ExampleObject(name = "Hub 1 (TCA 301)", value = "hub1"),
+                            @ExampleObject(name = "Hub 2 (TCA 203)", value = "hub2"),
+                            @ExampleObject(name = "Hub 3 (TCA 301)", value = "hub3"),
+                            @ExampleObject(name = "Hub 4 (TCA 203)", value = "hub4"),
+                            @ExampleObject(name = "Hub 5 (SmartHub)", value = "hub5"),
+                            @ExampleObject(name = "Hub 6 (TCA 301 UA)", value = "hub6")}) String hubNumber) {
+        return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "application/json").body(testExecuteService.executeQueueV2(hubNumber, queueList));
+    }
 }
